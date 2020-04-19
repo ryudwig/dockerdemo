@@ -10,13 +10,13 @@
 
 
 # Start with a base image containing Java runtime
-FROM openjdk:8
+FROM java:8
 
 # Add Author info
 LABEL maintainer="ludwig.ryu@gmail.com"
 
 # Add a volume to /tmp
-VOLUME /tmp
+#VOLUME /tmp
 # Make port 8080 available to the world outside this container
 EXPOSE 8088
 
@@ -24,7 +24,7 @@ EXPOSE 8088
 ARG JAR_FILE=jpa-0.0.1-SNAPSHOT.jar
 
 # Add the application's jar to the container
-COPY target/${JAR_FILE} /democontainer.jar
+COPY ${JAR_FILE} /democontainer.jar
 
 # Run the jar file
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","democontainer.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/democontainer.jar"]
