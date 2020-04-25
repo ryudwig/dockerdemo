@@ -1,10 +1,11 @@
 pipeline {
   agent none
   stages {
-    stage('Initialize') {
+    stage('Buld & Test') {
       steps {
-        sh 'ls'
+        sh 'mvn -Dmaven.test.failure.ignore clean package'
       }
     }
+
   }
 }
