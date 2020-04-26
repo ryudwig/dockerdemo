@@ -16,7 +16,9 @@ FROM java:8
 LABEL maintainer="ludwig.ryu@gmail.com"
 
 # Add a volume to /tmp
-WORKDIR /opt/app
+#WORKDIR /opt/app
+VOLUME /tmp
+
 # Make port 8080 available to the world outside this container
 EXPOSE 8088
 
