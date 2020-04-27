@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Buld & SonarQube analysis') {
       steps {
-        withSonarQubeEnv('My SonarQube Server') {
+        withSonarQubeEnv(installationName: 'widerplanet SonarQube', credentialsId: 'sonarqube-token') {
           sh 'mvn clean package sonar:sonar'
         }
 
@@ -19,7 +19,7 @@ pipeline {
     stage('Quality Gate') {
       steps {
         timeout(time: 1, unit: 'HOURS') {
-          waitForQualityGate true
+          waitForQualityGate(abortPipeline: true, credentialsId: 'sonarqube-token')
         }
 
       }
