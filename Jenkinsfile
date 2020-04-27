@@ -7,9 +7,20 @@ pipeline {
 
   }
   stages {
-    stage('Buld & Test') {
-      steps {
-        sh 'mvn clean package'
+    stage('Build') {
+      parallel {
+        stage('Build') {
+          steps {
+            sh 'mvn clean package sonar:sonar'
+          }
+        }
+
+        stage('Quality Gate') {
+          steps {
+            waitForQualityGate(abortPipeline: true, credentialsId: 'aaa', webhookSecretId: 'bbb')
+          }
+        }
+
       }
     }
 
