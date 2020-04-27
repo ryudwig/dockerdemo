@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'mvn clean package sonar:sonar'
+        sh 'mvn package sonar:sonar'
       }
     }
 
