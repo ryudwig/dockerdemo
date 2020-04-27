@@ -8,19 +8,14 @@ pipeline {
   }
   stages {
     stage('Build') {
-      parallel {
-        stage('Build') {
-          steps {
-            sh 'mvn clean package sonar:sonar'
-          }
-        }
+      steps {
+        sh 'mvn clean package sonar:sonar'
+      }
+    }
 
-        stage('Quality Gate') {
-          steps {
-            waitForQualityGate(abortPipeline: true, credentialsId: 'aaa', webhookSecretId: 'bbb')
-          }
-        }
-
+    stage('Quality Analysis') {
+      steps {
+        waitForQualityGate(abortPipeline: true, credentialsId: 'sonarqube-token', webhookSecretId: 'ryu_Jenkins')
       }
     }
 
