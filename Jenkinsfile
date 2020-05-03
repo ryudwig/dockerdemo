@@ -10,6 +10,12 @@ pipeline {
       }
     }
 
+    stage('Build Docker Image') {
+                steps {
+                    sh 'mvn install dockerfile:build'
+                }
+    }
+
     stage('Quality Analysis') {
         steps {
             withSonarQubeEnv('widerplanet SonarQube'){
@@ -20,7 +26,7 @@ pipeline {
 
     stage('Quality Gate') {
       steps {
-        timeout(time: 1, unit: 'HOURS'){
+        timeout(time: 5, unit: 'MINUTES'){
             waitForQualityGate(abortPipeline: true, credentialsId: 'sonarqube-token', webhookSecretId: 'ryu_Jenkins')
         }
       }
