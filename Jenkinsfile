@@ -12,7 +12,7 @@ pipeline {
 
     stage('Quality Analysis') {
         steps {
-            withSonarQubeEnv('SonarQubeScanner'){
+            withSonarQubeEnv('widerplanet SonarQube'){
                 sh 'mvn sonar:sonar'
             }
         }
