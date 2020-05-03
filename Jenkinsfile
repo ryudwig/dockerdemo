@@ -21,10 +21,7 @@ pipeline {
     stage('Quality Gate') {
       steps {
         timeout(time: 1, unit: 'HOURS'){
-            QG_RES = waitForQualityGate(abortPipeline: true, credentialsId: 'sonarqube-token', webhookSecretId: 'ryu_Jenkins')
-            if(QG_RES.status != 'OK'){
-                error "Pipeline aborted due to quality gate failure: ${QG_RES.status}"
-            }
+            waitForQualityGate(abortPipeline: true, credentialsId: 'sonarqube-token', webhookSecretId: 'ryu_Jenkins'): true
         }
       }
     }
