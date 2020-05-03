@@ -1,4 +1,4 @@
-node {
+pipeline {
   agent any
   tools {
     maven 'maven'
@@ -21,7 +21,10 @@ node {
     stage('Quality Gate') {
       steps {
         timeout(time: 1, unit: 'HOURS'){
-            waitForQualityGate(abortPipeline: true, credentialsId: 'sonarqube-token', webhookSecretId: 'ryu_Jenkins')
+            QG_RES = waitForQualityGate(abortPipeline: true, credentialsId: 'sonarqube-token', webhookSecretId: 'ryu_Jenkins')
+            if(QG_RES.status != 'OK'){
+                error "Pipeline aborted due to quality gate failure: ${QG_RES.status}"
+            }
         }
       }
     }
