@@ -13,7 +13,7 @@ pipeline {
     stage('Build Docker Image') {
         steps {
             sh 'mvn install dockerfile:build'
-            sh 'docker tag ryudwig/jpa gcr.io/gcrtest2/jpa'
+            sh 'docker tag ${IMG_PREFIX}/${IMAGE_NAME} gcr.io/gcrtest2/jpa'
         }
     }
 
@@ -47,5 +47,9 @@ pipeline {
   }
   environment {
     tools = 'maven \'mvn-3.63\''
+    IMG_PREFIX = readMavenPom().getProperties().getProperty('docker.image.prefix')
+    IMAGE_NAME = readMavenPom().getArtifactId()
+    VERSION = readMavenPom().getVersion()
+
   }
 }
