@@ -18,7 +18,7 @@ pipeline {
 
     stage('Push Image to GCR') {
          steps {
-             withDockerRegistry([credentialsId: 'gcrtest2', url: 'https://gcr.io']){
+             withDockerRegistry([credentialsId: 'gcr:gcrtest2', url: 'https://gcr.io']){
                 sh "docker push ryudwig/jpa:latest"
              //sh "docker push ${env.DOCKER_REPO}/${env.DOCKER_IMAGE}:${env.BUILD_NUMBER}"
              }
